@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body ng-app="app">
+	
+	<div data-ng-controller="MainCtrl">
+		{{val}}
+	</div>
+
+	<div data-ng-controller="HomeCtrl">
+		{{val}}
+	</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+	
+	<script>
+		angular
+			.module('app',[])
+			.controller('MainCtrl', ['$scope', 'Fac', function($scope, Fac){
+				$scope.val = Fac.val;
+				Fac.myMethod();
+				Fac.set(10);
+			}])
+			.controller('HomeCtrl', ['$scope', 'Fac', function($scope, Fac){
+				$scope.val = Fac.val;
+				Fac.myMethod();
+				console.log(Fac.get());
+			}])
+			.factory('Fac', function(){
+				var data=0;
+				var factory = {};
+
+				factory.val = 1;
+				factory.myMethod = function(){
+					console.log('Inside my factory');
+				}
+				factory.set = function(value){
+					data = value;
+				}
+				factory.get = function(){
+					return data;
+				}
+
+				return factory;
+			});
+
+	</script>
+</body>
+</html>
